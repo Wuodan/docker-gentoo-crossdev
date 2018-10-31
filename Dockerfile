@@ -19,4 +19,6 @@ RUN mkdir -p /usr/local/portage-crossdev/{profiles,metadata} && \
 # # update portage
 	emerge --sync --quiet && \
 # install crossdev and qemu
-	emerge -q sys-devel/crossdev app-emulation/qemu
+	emerge -q sys-devel/crossdev && \
+	USE="static-user static-libs" emerge -q app-emulation/qemu && \
+	quickpkg app-emulation/qemu
