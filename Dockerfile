@@ -17,8 +17,10 @@ RUN mkdir -p /usr/local/portage-crossdev/{profiles,metadata} && \
 	echo 'masters = gentoo' > /usr/local/portage-crossdev/metadata/layout.conf && \
 	chown -R portage:portage /usr/local/portage-crossdev && \
 # # update portage
-	emerge --sync --quiet && \
+	emerge --sync --quiet
 # install crossdev and qemu
-	emerge -q sys-devel/crossdev && \
-	USE="static-user static-libs" emerge -q app-emulation/qemu && \
-	quickpkg app-emulation/qemu
+RUN emerge -q sys-devel/crossdev
+# install crossdev and qemu
+# RUN USE="static-user static-libs" emerge -q app-emulation/qemu && \
+# 	quickpkg app-emulation/qemu
+RUN emerge -qu app-emulation/qemu
