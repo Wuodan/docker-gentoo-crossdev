@@ -16,11 +16,8 @@ RUN mkdir -p /usr/local/portage-crossdev/{profiles,metadata} && \
 	echo 'crossdev' > /usr/local/portage-crossdev/profiles/repo_name && \
 	echo 'masters = gentoo' > /usr/local/portage-crossdev/metadata/layout.conf && \
 	chown -R portage:portage /usr/local/portage-crossdev && \
-# # update portage
-	emerge --sync --quiet
+# update portage
+	emerge --sync --quiet && \
 # install crossdev and qemu
-RUN emerge -q sys-devel/crossdev
-# install crossdev and qemu
-# RUN USE="static-user static-libs" emerge -q app-emulation/qemu && \
-# 	quickpkg app-emulation/qemu
-RUN emerge -qu app-emulation/qemu
+# install vim cause nano sucks hard
+	emerge -q app-emulation/qemu app-editors/vim dev-vcs/git sys-devel/crossdev
