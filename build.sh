@@ -13,12 +13,10 @@ echo "Refreshing base images"
 for base in $(sed -En 's#^[[:space:]]*FROM[[:space:]]+([^ \t]+)#\1#p' ${DIR}/Dockerfile | sed -E 's#\t# #g' | cut -d ' ' -f 1); do
 	docker pull ${base}
 done
-echo "Refreshing image itself to avoid unnecessary rebuilds"
-docker pull ${FULL_TAG}
 
-echo "Build image, write log to : ${DIR}/log/docker-build.${DATETIME}.log"
 mkdir -p ${DIR}/log
-docker build -t ${FULL_TAG} $DIR 2>&1 | tee ${DIR}/log/docker-build.${DATETIME}.log
+echo "Build image, write log to : ${DIR}/log/docker-build.${DATETIME}.log"
+docker build --tag ${FULL_TAG} $DIR 2>&1 | tee ${DIR}/log/docker-build.${DATETIME}.log
 
 echo "Push image ..."
 docker push ${FULL_TAG}
