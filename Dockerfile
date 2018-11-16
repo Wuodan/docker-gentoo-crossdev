@@ -3,15 +3,13 @@ FROM gentoo/portage:latest as portage
 FROM gentoo/stage3-amd64-hardened:latest
 
 # copy the entire portage volume
-COPY --from=portage /usr/portage /usr/portage
+COPY --chown=portage:portage --from=portage /usr/portage /usr/portage
 
 # configure portage and crossdev overlay
 COPY host-files/ /
 
-# chown gentoo overlay
-RUN chown -R portage:portage /usr/portage && \
 # configure portage
-	echo -e '\n\
+RUN echo -e '\n\
 # custom\n\
 MAKEOPTS="-j8"\n\
 EMERGE_DEFAULT_OPTS="${EMERGE_DEFAULT_OPTS} --jobs=8 --load-average=8"\n\
